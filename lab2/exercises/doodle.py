@@ -1,8 +1,16 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from typing import Dict
+from typing import Dict, Literal
 from threading import Lock
+from uuid import uuid4
+
+
+def generate_unique_id(existing_ids: set) -> str:
+    while True:
+        new_id = str(uuid4())
+        if new_id not in existing_ids:
+            return new_id
 
 
 class Option(BaseModel):
@@ -16,7 +24,9 @@ class Poll(BaseModel):
 
 
 polls: Dict[str, Poll] = {}
-poll_id_counter = 0
+UpdateOption = Literal["add", "remove"]
+
+
 lock = Lock()
 
 app = FastAPI()
@@ -24,11 +34,7 @@ app = FastAPI()
 
 @app.post("/poll")
 async def create_poll(poll: Poll):
-    global poll_id_counter
-    with lock:
-        poll_id = str(poll_id_counter)
-        poll_id_counter += 1
-
+    poll_id = generate_unique_id(set(polls.keys()))
     polls[poll_id] = poll
     return JSONResponse(
         {
@@ -88,27 +94,21 @@ async def read_votes(id: str):
     )
 
 
-@app.post("/poll/{id}/vote/")
-async def create_vote(id: str, option: Option):
-    if id not in polls:
+@app.post("/poll/{poll_id}/vote")
+async def create_vote(poll_id: str, option: Option):
+    if poll_id not in polls:
         return JSONResponse({"error": "Poll not found"}, status_code=404)
-    poll = polls[id]
 
-    new_id = str(len(polls[id].options.keys()) + 1)
-
-    poll.options[new_id] = option
-
-    options_dict = {
-        option_id: option.model_dump()
-        for option_id, option in polls[id].options.items()
-    }
+    option_id = generate_unique_id(set(polls[poll_id].options.keys()))
+    polls[poll_id].options[option_id] = option
 
     return JSONResponse(
         {
-            "message": f"New option for Poll {id} created successfully",
-            "options": options_dict,
+            "message": f"New option added to Poll {poll_id}",
+            "option_id": option_id,
+            "option": option.model_dump(),
         },
-        status_code=200,
+        status_code=201,
     )
 
 
@@ -130,14 +130,25 @@ async def read_vote(id: str, option_id: str):
 
 
 @app.put("/poll/{id}/vote/{option_id}")
-async def update_vote(id: str, option_id: str):
+async def update_vote(id: str, option_id: str, update_option: UpdateOption):
     if id not in polls or option_id not in polls[id].options:
         return JSONResponse({"error": "Poll or option not found"}, status_code=404)
 
-    polls[id].options[option_id].vote_count += 1
+    if update_option == "add":
+        polls[id].options[option_id].vote_count += 1
+    elif update_option == "remove":
+        if polls[id].options[option_id].vote_count > 0:
+            polls[id].options[option_id].vote_count -= 1
+        else:
+            return JSONResponse(
+                {"error": "Option vote count cannot be negative"}, status_code=400
+            )
+    else:
+        return JSONResponse({"error": "Incorrect update option"}, status_code=400)
+
     return JSONResponse(
         {
-            "message": f"Vote updated for option {option_id} in Poll {id}",
+            "message": f"Vote {update_option}ed for option {option_id} in Poll {id}",
             "vote_count": polls[id].options[option_id].vote_count,
         },
         status_code=200,
@@ -149,17 +160,9 @@ async def delete_vote(id: str, option_id: str):
     if id not in polls or option_id not in polls[id].options:
         return JSONResponse({"error": "Poll or option not found"}, status_code=404)
 
-    if polls[id].options[option_id].vote_count > 0:
-        polls[id].options[option_id].vote_count -= 1
-    else:
-        return JSONResponse(
-            {"error": "Option vote count cannot be a negative value"}, status_code=404
-        )
+    del polls[id].options[option_id]
 
     return JSONResponse(
-        {
-            "message": f"Vote updated for option {option_id} in Poll {id}",
-            "vote_count": polls[id].options[option_id].vote_count,
-        },
+        {"message": f"Option {option_id} deleted from Poll {id}"},
         status_code=200,
     )

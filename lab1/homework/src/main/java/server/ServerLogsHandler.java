@@ -4,14 +4,14 @@ import java.util.concurrent.BlockingQueue;
 
 public class ServerLogsHandler implements Runnable {
     private final BlockingQueue<String> logQueue;
-    private volatile boolean running = true;
+    private static final String STOP_SIGNAL = "STOP";
 
     public ServerLogsHandler(BlockingQueue<String> logQueue) {
         this.logQueue = logQueue;
     }
 
-    protected void stop() {
-        running = false;
+    public void stop() {
+        logQueue.offer(STOP_SIGNAL);
     }
 
     protected void logServerMessage(String message) {
@@ -19,26 +19,24 @@ public class ServerLogsHandler implements Runnable {
             logQueue.put(message);
         } catch (InterruptedException e) {
             System.err.println("Error while adding log message to queue: " + e.getMessage());
+            Thread.currentThread().interrupt();
         }
     }
 
     @Override
     public void run() {
-        while (running) {
+        while (true) {
             try {
                 String messageToLog = logQueue.take();
-                if (!running) {
+
+                if (STOP_SIGNAL.equals(messageToLog)) {
                     break;
                 }
 
                 System.out.println(messageToLog);
-
             } catch (InterruptedException e) {
-                if (!running) {
-                    break;
-                }
-                System.err.println("Log handler interrupted, stopping...");
                 Thread.currentThread().interrupt();
+                break;
             }
         }
         System.out.println("Server log handler thread stopped.");

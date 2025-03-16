@@ -3,7 +3,6 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.concurrent.*;
 
 import classes.Client;
@@ -20,23 +19,26 @@ public class Server {
     private static final ConcurrentHashMap<Integer, ClientHandler> clients = new ConcurrentHashMap<>();
     private static final ExecutorService clientExecutor = Executors.newFixedThreadPool(10);
 
+    private static final ExecutorService serverHelperExecutor = Executors.newFixedThreadPool(2);
     protected static final ServerLogsHandler serverLogsHandler = new ServerLogsHandler(serverLogsQueue);
+
     private static ServerSocket serverSocket;
 
     public static void main(String[] args) {
-        new Thread(serverLogsHandler).start();
+        serverHelperExecutor.submit(serverLogsHandler);
+
         serverLogsHandler.logServerMessage("Initializing server...");
+
+        serverHelperExecutor.submit(new ShutdownListener((Server::shutdownServer)));
 
         try {
             serverSocket = new ServerSocket(PORT);
             serverLogsHandler.logServerMessage("Server running on port " + PORT);
             serverLogsHandler.logServerMessage("Initializing message queue...");
 
-            clientExecutor.submit(new Messenger(messageQueue, clients));
+            serverHelperExecutor.submit(new Messenger(messageQueue, clients));
 
             serverLogsHandler.logServerMessage("Message queue initialized!");
-
-            startShutdownListener();
 
             while (running) {
                 try {
@@ -68,22 +70,6 @@ public class Server {
                 "Registered a new client: id: " + newClient.id() + ", nickname: " + newClient.nickname());
     }
 
-    private static void startShutdownListener() {
-        new Thread(() -> {
-            Scanner scanner = new Scanner(System.in);
-            while (running) {
-                if (scanner.hasNextLine()) {
-                    String command = scanner.nextLine();
-                    if ("exit".equalsIgnoreCase(command)) {
-                        shutdownServer();
-                        break;
-                    }
-                }
-            }
-            scanner.close();
-        }).start();
-    }
-
     private static void shutdownServer() {
         if (!running)
             return;
@@ -93,9 +79,7 @@ public class Server {
         running = false;
         shutdownAllClients();
         closeServerSocket();
-
-        serverLogsHandler.logServerMessage("Server shut down successfully.");
-        serverLogsHandler.stop();
+        shutdownHelpers();
     }
 
     private static void shutdownAllClients() {
@@ -126,4 +110,16 @@ public class Server {
         }
     }
 
+    private static void shutdownHelpers() {
+
+        serverHelperExecutor.shutdown();
+        try {
+            if (!serverHelperExecutor.awaitTermination(5, TimeUnit.SECONDS)) {
+                serverHelperExecutor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            serverHelperExecutor.shutdownNow();
+        }
+    }
 }

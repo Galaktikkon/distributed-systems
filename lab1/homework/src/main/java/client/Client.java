@@ -71,10 +71,10 @@ public class Client {
             System.out.println(">Server: Your assigned nickname: " + nickname);
 
             TCPListener tcpListener = new TCPListener(in);
-            clientHelpers.submit(new Thread(tcpListener));
+            clientHelpers.submit(tcpListener);
 
             UDPListener udpListener = new UDPListener(udpSocket);
-            clientHelpers.submit(new Thread(udpListener));
+            clientHelpers.submit(udpListener);
 
             ScannerListener scannerListener = new ScannerListener();
             clientHelpers.submit(scannerListener);

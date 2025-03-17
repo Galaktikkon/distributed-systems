@@ -58,7 +58,6 @@ public class Client {
             in = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
 
             multicastAddress = InetAddress.getByName(args.length > 0 && args[0] != null ? args[0] : MULTICAST_ADDRESS);
-            System.out.println(multicastAddress);
             multicastSocket = new MulticastSocket(MULTICAST_PORT);
 
             networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());

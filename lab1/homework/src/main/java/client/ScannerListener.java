@@ -52,8 +52,9 @@ class ScannerListener implements Runnable {
                 scanner = new Scanner(System.in);
                 continue;
             }
-
-            out.println(userMessage);
+            if (!userMessage.trim().isEmpty()) {
+                out.println(userMessage);
+            }
         }
         scanner.close();
     }
@@ -92,18 +93,18 @@ class ScannerListener implements Runnable {
     }
 
     private static String readMultipleLines() {
-        lineNumber++;
         StringBuilder udpMessageBuilder = new StringBuilder();
         while (scanner.hasNextLine()) {
             String udpLine = scanner.nextLine();
-            if (udpLine.trim().isEmpty())
+            if (udpLine == null)
                 break;
 
             udpMessageBuilder.append(udpLine).append("\n");
+            lineNumber++;
         }
 
         clearLines(lineNumber);
         lineNumber = 1;
-        return udpMessageBuilder.toString().trim();
+        return udpMessageBuilder.toString().substring(0, udpMessageBuilder.length() - 1);
     }
 }

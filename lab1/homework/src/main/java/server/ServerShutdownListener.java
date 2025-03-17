@@ -2,10 +2,10 @@ package server;
 
 import java.util.Scanner;
 
-public class ShutdownListener implements Runnable {
+public class ServerShutdownListener implements Runnable {
     private final Runnable shutdownCallback;
 
-    public ShutdownListener(Runnable shutdownCallback) {
+    public ServerShutdownListener(Runnable shutdownCallback) {
         this.shutdownCallback = shutdownCallback;
     }
 

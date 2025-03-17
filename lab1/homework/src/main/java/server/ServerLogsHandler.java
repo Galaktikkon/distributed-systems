@@ -4,14 +4,9 @@ import java.util.concurrent.BlockingQueue;
 
 public class ServerLogsHandler implements Runnable {
     private final BlockingQueue<String> logQueue;
-    private static final String STOP_SIGNAL = "STOP";
 
     public ServerLogsHandler(BlockingQueue<String> logQueue) {
         this.logQueue = logQueue;
-    }
-
-    public void stop() {
-        logQueue.offer(STOP_SIGNAL);
     }
 
     protected void logServerMessage(String message) {
@@ -28,10 +23,6 @@ public class ServerLogsHandler implements Runnable {
         while (true) {
             try {
                 String messageToLog = logQueue.take();
-
-                if (STOP_SIGNAL.equals(messageToLog)) {
-                    break;
-                }
 
                 System.out.println(messageToLog);
             } catch (InterruptedException e) {

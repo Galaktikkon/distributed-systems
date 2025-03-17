@@ -4,7 +4,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
+// import java.nio.charset.StandardCharsets; // exercise 2
 import java.util.Arrays;
 
 public class JavaUdpServer {

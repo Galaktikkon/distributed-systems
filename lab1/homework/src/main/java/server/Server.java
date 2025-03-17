@@ -16,11 +16,11 @@ public class Server {
     private static final BlockingQueue<Message> messageQueue = new LinkedBlockingQueue<>();
     private static final BlockingQueue<String> serverLogsQueue = new LinkedBlockingQueue<>();
 
-    private static final ConcurrentHashMap<Integer, ClientHandler> clients = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Integer, TCPHandler> clients = new ConcurrentHashMap<>();
     private static final ExecutorService clientExecutor = Executors.newFixedThreadPool(10);
 
-    private static final ExecutorService serverHelperExecutor = Executors.newFixedThreadPool(2);
-    protected static final ServerLogsHandler serverLogsHandler = new ServerLogsHandler(serverLogsQueue);
+    private static final ExecutorService serverHelperExecutor = Executors.newFixedThreadPool(4);
+    private static final ServerLogsHandler serverLogsHandler = new ServerLogsHandler(serverLogsQueue);
 
     private static ServerSocket serverSocket;
 
@@ -29,15 +29,18 @@ public class Server {
 
         serverLogsHandler.logServerMessage("Initializing server...");
 
-        serverHelperExecutor.submit(new ShutdownListener((Server::shutdownServer)));
+        serverHelperExecutor.submit(new ServerShutdownListener((Server::shutdownServer)));
 
         try {
             serverSocket = new ServerSocket(PORT);
             serverLogsHandler.logServerMessage("Server running on port " + PORT);
+
+            serverLogsHandler.logServerMessage("Initializing UDP Handler...");
+            serverHelperExecutor.submit(new UDPHandler());
+            serverLogsHandler.logServerMessage("UDP Handler initialized!");
+
             serverLogsHandler.logServerMessage("Initializing message queue...");
-
-            serverHelperExecutor.submit(new Messenger(messageQueue, clients));
-
+            serverHelperExecutor.submit(new ServerMessengerHandler());
             serverLogsHandler.logServerMessage("Message queue initialized!");
 
             while (running) {
@@ -63,8 +66,8 @@ public class Server {
 
     private static void registerNewClient(Socket clientSocket) {
         Client newClient = new Client(Generator.getNickName(), Generator.getUniqueID());
-        ClientHandler clientHandler = new ClientHandler(newClient, clientSocket, messageQueue);
-        clients.put(newClient.id(), clientHandler);
+        TCPHandler clientHandler = new TCPHandler(newClient, clientSocket);
+        clients.put(clientSocket.getPort(), clientHandler);
         clientExecutor.submit(clientHandler);
         serverLogsHandler.logServerMessage(
                 "Registered a new client: id: " + newClient.id() + ", nickname: " + newClient.nickname());
@@ -84,10 +87,9 @@ public class Server {
 
     private static void shutdownAllClients() {
 
-        for (ClientHandler clientHandler : clients.values()) {
+        for (TCPHandler clientHandler : clients.values()) {
             clientHandler.shutdownClient();
         }
-        clients.clear();
 
         clientExecutor.shutdown();
         try {
@@ -121,5 +123,17 @@ public class Server {
             Thread.currentThread().interrupt();
             serverHelperExecutor.shutdownNow();
         }
+    }
+
+    public static BlockingQueue<Message> getMessageQueue() {
+        return messageQueue;
+    }
+
+    public static ConcurrentHashMap<Integer, TCPHandler> getClients() {
+        return clients;
+    }
+
+    public static ServerLogsHandler getServerLogsHandler() {
+        return serverLogsHandler;
     }
 }

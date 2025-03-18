@@ -1,0 +1,10 @@
+[project]
+name = "lab2"
+version = "0.1.0"
+description = "AGH Distributed Systems lab no 2"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115.11",
+    "uvicorn>=0.34.0",
+]

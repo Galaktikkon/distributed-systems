@@ -5,6 +5,12 @@ description = "AGH Distributed Systems lab no 2"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "asyncio>=3.4.3",
+    "dotenv>=0.9.9",
     "fastapi>=0.115.11",
+    "httpx>=0.28.1",
     "uvicorn>=0.34.0",
 ]
+
+[tool.uv.workspace]
+members = ["homework"]

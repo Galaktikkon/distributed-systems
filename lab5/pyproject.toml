@@ -1,0 +1,12 @@
+[project]
+name = "lab5"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "jupyter>=1.1.1",
+    "numpy>=2.2.4",
+    "pip>=25.0.1",
+    "ray[default]>=2.44.1",
+]

@@ -2,9 +2,9 @@
 #
 
 import Ice
-Ice.updateModule("Hello")
+Ice.updateModule("Servants")
 
 # Modules:
-import hello_ice
+import Servants_ice
 
 # Submodules:

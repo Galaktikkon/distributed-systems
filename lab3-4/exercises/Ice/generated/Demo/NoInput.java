@@ -48,5 +48,5 @@ public class NoInput extends com.zeroc.Ice.UserException
     }
 
     /** @hidden */
-    public static final long serialVersionUID = 1706896051L;
+    public static final long serialVersionUID = -8419862277737600333L;
 }

@@ -1,0 +1,25 @@
+version = 1
+revision = 2
+requires-python = ">=3.12"
+
+[[package]]
+name = "server"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "zeroc-ice" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "zeroc-ice", specifier = ">=3.7.10.1" }]
+
+[[package]]
+name = "zeroc-ice"
+version = "3.7.10.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/cf/a1/3ddb4e1c4033785ca4ed58b078644bc7d33476373b913acee6ad6bdb4c85/zeroc_ice-3.7.10.1.tar.gz", hash = "sha256:b063aafda360df711f76945529bb541576f266be41e5d5a2dd77f5d320c18664", size = 1316205, upload_time = "2024-06-06T10:03:43.234Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a3/09/c92890884d66e2a1e06eb71044e93fd5ea3fe40a7c27a6cfb6bf62a18f62/zeroc_ice-3.7.10.1-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:9412433e04585aa362e9291f28cd3fd1e811ea115991fdf68f9aa6aaadf8082a", size = 2524289, upload_time = "2024-06-06T18:25:32.913Z" },
+    { url = "https://files.pythonhosted.org/packages/20/10/1ed717c32a44954fc09670db903409c26bdb91f7572ab3c3452ea207306a/zeroc_ice-3.7.10.1-cp312-cp312-win32.whl", hash = "sha256:55b12926a6328664ea423bc0766c87dc7d293520d857438752bff5ab88c0e27f", size = 1881517, upload_time = "2024-06-06T18:25:34.927Z" },
+    { url = "https://files.pythonhosted.org/packages/2a/c3/4cc6e0e9abb7684ccb97c66078eee7599beea9c9b774e197d32e978a3f80/zeroc_ice-3.7.10.1-cp312-cp312-win_amd64.whl", hash = "sha256:85b0bc8d17ef765bdbba248af75cb013b2e7e03283fe100c2d8ff7cd3648f7fd", size = 2329011, upload_time = "2024-06-06T18:25:37.015Z" },
+]

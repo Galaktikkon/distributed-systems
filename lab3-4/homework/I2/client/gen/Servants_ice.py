@@ -21,130 +21,130 @@ import Ice, IcePy
 _M_Servants = Ice.openModule('Servants')
 __name__ = 'Servants'
 
-_M_Servants._t_Dedicated = IcePy.defineValue('::Servants::Dedicated', Ice.Value, -1, (), False, True, None, ())
+_M_Servants._t_DedicatedJar = IcePy.defineValue('::Servants::DedicatedJar', Ice.Value, -1, (), False, True, None, ())
 
-if 'DedicatedPrx' not in _M_Servants.__dict__:
-    _M_Servants.DedicatedPrx = Ice.createTempClass()
-    class DedicatedPrx(Ice.ObjectPrx):
+if 'DedicatedJarPrx' not in _M_Servants.__dict__:
+    _M_Servants.DedicatedJarPrx = Ice.createTempClass()
+    class DedicatedJarPrx(Ice.ObjectPrx):
 
-        def sayHello(self, context=None):
-            return _M_Servants.Dedicated._op_sayHello.invoke(self, ((), context))
+        def eatCookie(self, context=None):
+            return _M_Servants.DedicatedJar._op_eatCookie.invoke(self, ((), context))
 
-        def sayHelloAsync(self, context=None):
-            return _M_Servants.Dedicated._op_sayHello.invokeAsync(self, ((), context))
+        def eatCookieAsync(self, context=None):
+            return _M_Servants.DedicatedJar._op_eatCookie.invokeAsync(self, ((), context))
 
-        def begin_sayHello(self, _response=None, _ex=None, _sent=None, context=None):
-            return _M_Servants.Dedicated._op_sayHello.begin(self, ((), _response, _ex, _sent, context))
+        def begin_eatCookie(self, _response=None, _ex=None, _sent=None, context=None):
+            return _M_Servants.DedicatedJar._op_eatCookie.begin(self, ((), _response, _ex, _sent, context))
 
-        def end_sayHello(self, _r):
-            return _M_Servants.Dedicated._op_sayHello.end(self, _r)
-
-        @staticmethod
-        def checkedCast(proxy, facetOrContext=None, context=None):
-            return _M_Servants.DedicatedPrx.ice_checkedCast(proxy, '::Servants::Dedicated', facetOrContext, context)
-
-        @staticmethod
-        def uncheckedCast(proxy, facet=None):
-            return _M_Servants.DedicatedPrx.ice_uncheckedCast(proxy, facet)
-
-        @staticmethod
-        def ice_staticId():
-            return '::Servants::Dedicated'
-    _M_Servants._t_DedicatedPrx = IcePy.defineProxy('::Servants::Dedicated', DedicatedPrx)
-
-    _M_Servants.DedicatedPrx = DedicatedPrx
-    del DedicatedPrx
-
-    _M_Servants.Dedicated = Ice.createTempClass()
-    class Dedicated(Ice.Object):
-
-        def ice_ids(self, current=None):
-            return ('::Ice::Object', '::Servants::Dedicated')
-
-        def ice_id(self, current=None):
-            return '::Servants::Dedicated'
-
-        @staticmethod
-        def ice_staticId():
-            return '::Servants::Dedicated'
-
-        def sayHello(self, current=None):
-            raise NotImplementedError("servant method 'sayHello' not implemented")
-
-        def __str__(self):
-            return IcePy.stringify(self, _M_Servants._t_DedicatedDisp)
-
-        __repr__ = __str__
-
-    _M_Servants._t_DedicatedDisp = IcePy.defineClass('::Servants::Dedicated', Dedicated, (), None, ())
-    Dedicated._ice_type = _M_Servants._t_DedicatedDisp
-
-    Dedicated._op_sayHello = IcePy.Operation('sayHello', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (), (), ((), IcePy._t_string, False, 0), ())
-
-    _M_Servants.Dedicated = Dedicated
-    del Dedicated
-
-_M_Servants._t_Shared = IcePy.defineValue('::Servants::Shared', Ice.Value, -1, (), False, True, None, ())
-
-if 'SharedPrx' not in _M_Servants.__dict__:
-    _M_Servants.SharedPrx = Ice.createTempClass()
-    class SharedPrx(Ice.ObjectPrx):
-
-        def getStatus(self, context=None):
-            return _M_Servants.Shared._op_getStatus.invoke(self, ((), context))
-
-        def getStatusAsync(self, context=None):
-            return _M_Servants.Shared._op_getStatus.invokeAsync(self, ((), context))
-
-        def begin_getStatus(self, _response=None, _ex=None, _sent=None, context=None):
-            return _M_Servants.Shared._op_getStatus.begin(self, ((), _response, _ex, _sent, context))
-
-        def end_getStatus(self, _r):
-            return _M_Servants.Shared._op_getStatus.end(self, _r)
+        def end_eatCookie(self, _r):
+            return _M_Servants.DedicatedJar._op_eatCookie.end(self, _r)
 
         @staticmethod
         def checkedCast(proxy, facetOrContext=None, context=None):
-            return _M_Servants.SharedPrx.ice_checkedCast(proxy, '::Servants::Shared', facetOrContext, context)
+            return _M_Servants.DedicatedJarPrx.ice_checkedCast(proxy, '::Servants::DedicatedJar', facetOrContext, context)
 
         @staticmethod
         def uncheckedCast(proxy, facet=None):
-            return _M_Servants.SharedPrx.ice_uncheckedCast(proxy, facet)
+            return _M_Servants.DedicatedJarPrx.ice_uncheckedCast(proxy, facet)
 
         @staticmethod
         def ice_staticId():
-            return '::Servants::Shared'
-    _M_Servants._t_SharedPrx = IcePy.defineProxy('::Servants::Shared', SharedPrx)
+            return '::Servants::DedicatedJar'
+    _M_Servants._t_DedicatedJarPrx = IcePy.defineProxy('::Servants::DedicatedJar', DedicatedJarPrx)
 
-    _M_Servants.SharedPrx = SharedPrx
-    del SharedPrx
+    _M_Servants.DedicatedJarPrx = DedicatedJarPrx
+    del DedicatedJarPrx
 
-    _M_Servants.Shared = Ice.createTempClass()
-    class Shared(Ice.Object):
+    _M_Servants.DedicatedJar = Ice.createTempClass()
+    class DedicatedJar(Ice.Object):
 
         def ice_ids(self, current=None):
-            return ('::Ice::Object', '::Servants::Shared')
+            return ('::Ice::Object', '::Servants::DedicatedJar')
 
         def ice_id(self, current=None):
-            return '::Servants::Shared'
+            return '::Servants::DedicatedJar'
 
         @staticmethod
         def ice_staticId():
-            return '::Servants::Shared'
+            return '::Servants::DedicatedJar'
 
-        def getStatus(self, current=None):
-            raise NotImplementedError("servant method 'getStatus' not implemented")
+        def eatCookie(self, current=None):
+            raise NotImplementedError("servant method 'eatCookie' not implemented")
 
         def __str__(self):
-            return IcePy.stringify(self, _M_Servants._t_SharedDisp)
+            return IcePy.stringify(self, _M_Servants._t_DedicatedJarDisp)
 
         __repr__ = __str__
 
-    _M_Servants._t_SharedDisp = IcePy.defineClass('::Servants::Shared', Shared, (), None, ())
-    Shared._ice_type = _M_Servants._t_SharedDisp
+    _M_Servants._t_DedicatedJarDisp = IcePy.defineClass('::Servants::DedicatedJar', DedicatedJar, (), None, ())
+    DedicatedJar._ice_type = _M_Servants._t_DedicatedJarDisp
 
-    Shared._op_getStatus = IcePy.Operation('getStatus', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (), (), ((), IcePy._t_string, False, 0), ())
+    DedicatedJar._op_eatCookie = IcePy.Operation('eatCookie', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (), (), ((), IcePy._t_string, False, 0), ())
 
-    _M_Servants.Shared = Shared
-    del Shared
+    _M_Servants.DedicatedJar = DedicatedJar
+    del DedicatedJar
+
+_M_Servants._t_SharedReporter = IcePy.defineValue('::Servants::SharedReporter', Ice.Value, -1, (), False, True, None, ())
+
+if 'SharedReporterPrx' not in _M_Servants.__dict__:
+    _M_Servants.SharedReporterPrx = Ice.createTempClass()
+    class SharedReporterPrx(Ice.ObjectPrx):
+
+        def getEatenStatus(self, context=None):
+            return _M_Servants.SharedReporter._op_getEatenStatus.invoke(self, ((), context))
+
+        def getEatenStatusAsync(self, context=None):
+            return _M_Servants.SharedReporter._op_getEatenStatus.invokeAsync(self, ((), context))
+
+        def begin_getEatenStatus(self, _response=None, _ex=None, _sent=None, context=None):
+            return _M_Servants.SharedReporter._op_getEatenStatus.begin(self, ((), _response, _ex, _sent, context))
+
+        def end_getEatenStatus(self, _r):
+            return _M_Servants.SharedReporter._op_getEatenStatus.end(self, _r)
+
+        @staticmethod
+        def checkedCast(proxy, facetOrContext=None, context=None):
+            return _M_Servants.SharedReporterPrx.ice_checkedCast(proxy, '::Servants::SharedReporter', facetOrContext, context)
+
+        @staticmethod
+        def uncheckedCast(proxy, facet=None):
+            return _M_Servants.SharedReporterPrx.ice_uncheckedCast(proxy, facet)
+
+        @staticmethod
+        def ice_staticId():
+            return '::Servants::SharedReporter'
+    _M_Servants._t_SharedReporterPrx = IcePy.defineProxy('::Servants::SharedReporter', SharedReporterPrx)
+
+    _M_Servants.SharedReporterPrx = SharedReporterPrx
+    del SharedReporterPrx
+
+    _M_Servants.SharedReporter = Ice.createTempClass()
+    class SharedReporter(Ice.Object):
+
+        def ice_ids(self, current=None):
+            return ('::Ice::Object', '::Servants::SharedReporter')
+
+        def ice_id(self, current=None):
+            return '::Servants::SharedReporter'
+
+        @staticmethod
+        def ice_staticId():
+            return '::Servants::SharedReporter'
+
+        def getEatenStatus(self, current=None):
+            raise NotImplementedError("servant method 'getEatenStatus' not implemented")
+
+        def __str__(self):
+            return IcePy.stringify(self, _M_Servants._t_SharedReporterDisp)
+
+        __repr__ = __str__
+
+    _M_Servants._t_SharedReporterDisp = IcePy.defineClass('::Servants::SharedReporter', SharedReporter, (), None, ())
+    SharedReporter._ice_type = _M_Servants._t_SharedReporterDisp
+
+    SharedReporter._op_getEatenStatus = IcePy.Operation('getEatenStatus', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (), (), ((), IcePy._t_string, False, 0), ())
+
+    _M_Servants.SharedReporter = SharedReporter
+    del SharedReporter
 
 # End of module Servants

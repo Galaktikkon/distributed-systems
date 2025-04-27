@@ -16,7 +16,8 @@
 package Servants;
 
 /** @hidden */
-public class _DedicatedPrxI extends com.zeroc.Ice._ObjectPrxI implements DedicatedPrx {
+public class _DedicatedJarPrxI extends com.zeroc.Ice._ObjectPrxI implements DedicatedJarPrx
+{
     /** @hidden */
     public static final long serialVersionUID = 0L;
 }

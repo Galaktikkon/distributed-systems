@@ -4,27 +4,27 @@ import com.zeroc.Ice.*;
 import com.zeroc.Ice.Exception;
 
 import server.servants.*;
+import utils.MessageLogger;
 
 public class Main {
+
+    public static final String SERVER_IDENTITY = "Server";
+
     public static void main(String[] args) {
         try (Communicator communicator = Util.initialize(args, "config.server")) {
-            ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("MyAdapter", "default -p 10000");
 
-            // Dodajemy "na sztywno" jeden dedykowany serwant dla "Dedicated1"
-            DedicatedImpl dedicatedServant = new DedicatedImpl("Dedicated1");
-            Identity dedicatedId = new Identity("Dedicated1", "");
-            adapter.add(dedicatedServant, dedicatedId);
+            ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("CookieAdapter", "default -p 10000");
+            adapter.addServantLocator(new DedicatedServantLocator(), "Dedicated");
 
-            // Dodajemy współdzielony serwant dla Shared
             SharedImpl sharedServant = new SharedImpl();
             Identity sharedId = new Identity("SharedObject", "");
             adapter.add(sharedServant, sharedId);
 
             adapter.activate();
-            System.out.println("[Server] Server started and ready...");
+            MessageLogger.logServer(SERVER_IDENTITY, "Server started and ready...");
             communicator.waitForShutdown();
         } catch (Exception e) {
-            System.err.println("[Server] Exception: " + e);
+            MessageLogger.logError(SERVER_IDENTITY, "Exception: " + e);
             e.printStackTrace();
         }
     }

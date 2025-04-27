@@ -1,9 +1,9 @@
 module Servants {
-    interface Dedicated {
-        string sayHello();
+    interface DedicatedJar {
+        string eatCookie();
     };
 
-    interface Shared {
-        string getStatus();
+    interface SharedReporter {
+        string getEatenStatus();
     };
 };

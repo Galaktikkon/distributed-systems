@@ -16,7 +16,8 @@
 package Servants;
 
 /** @hidden */
-public class _SharedPrxI extends com.zeroc.Ice._ObjectPrxI implements SharedPrx {
+public class _SharedReporterPrxI extends com.zeroc.Ice._ObjectPrxI implements SharedReporterPrx
+{
     /** @hidden */
     public static final long serialVersionUID = 0L;
 }

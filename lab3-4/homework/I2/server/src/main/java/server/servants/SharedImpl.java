@@ -1,12 +1,21 @@
 package server.servants;
 
 import Servants.*;
+import utils.MessageLogger;
+
 import com.zeroc.Ice.Current;
 
-public class SharedImpl implements Shared {
+public class SharedImpl implements SharedReporter {
+
+    private volatile int totalCookiesEaten = 0;
+
     @Override
-    public String getStatus(Current current) {
-        System.out.println("[Shared] getStatus called on SharedObject");
-        return "Shared servant is alive!";
+    public String getEatenStatus(Current current) {
+        MessageLogger.log("SharedReporter", "Total cookies eaten: " + this.totalCookiesEaten);
+        return "Total cookies eaten: " + this.totalCookiesEaten;
+    }
+
+    public void eatCookie() {
+        totalCookiesEaten++;
     }
 }

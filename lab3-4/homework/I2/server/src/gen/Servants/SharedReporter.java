@@ -15,41 +15,46 @@
 
 package Servants;
 
-public interface Shared extends com.zeroc.Ice.Object {
-    String getStatus(com.zeroc.Ice.Current current);
+public interface SharedReporter extends com.zeroc.Ice.Object
+{
+    String getEatenStatus(com.zeroc.Ice.Current current);
 
     /** @hidden */
-    static final String[] _iceIds = {
-            "::Ice::Object",
-            "::Servants::Shared"
+    static final String[] _iceIds =
+    {
+        "::Ice::Object",
+        "::Servants::SharedReporter"
     };
 
     @Override
-    default String[] ice_ids(com.zeroc.Ice.Current current) {
+    default String[] ice_ids(com.zeroc.Ice.Current current)
+    {
         return _iceIds;
     }
 
     @Override
-    default String ice_id(com.zeroc.Ice.Current current) {
+    default String ice_id(com.zeroc.Ice.Current current)
+    {
         return ice_staticId();
     }
 
-    static String ice_staticId() {
-        return "::Servants::Shared";
+    static String ice_staticId()
+    {
+        return "::Servants::SharedReporter";
     }
 
     /**
      * @hidden
-     * @param obj     -
-     * @param inS     -
+     * @param obj -
+     * @param inS -
      * @param current -
      * @return -
-     **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_getStatus(Shared obj,
-            final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current) {
+    **/
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_getEatenStatus(SharedReporter obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
         inS.readEmptyParams();
-        String ret = obj.getStatus(current);
+        String ret = obj.getEatenStatus(current);
         com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
         ostr.writeString(ret);
         inS.endWriteParams(ostr);
@@ -57,43 +62,51 @@ public interface Shared extends com.zeroc.Ice.Object {
     }
 
     /** @hidden */
-    final static String[] _iceOps = {
-            "getStatus",
-            "ice_id",
-            "ice_ids",
-            "ice_isA",
-            "ice_ping"
+    final static String[] _iceOps =
+    {
+        "getEatenStatus",
+        "ice_id",
+        "ice_ids",
+        "ice_isA",
+        "ice_ping"
     };
 
     /** @hidden */
     @Override
-    default java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceDispatch(
-            com.zeroc.IceInternal.Incoming in, com.zeroc.Ice.Current current)
-            throws com.zeroc.Ice.UserException {
+    default java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceDispatch(com.zeroc.IceInternal.Incoming in, com.zeroc.Ice.Current current)
+        throws com.zeroc.Ice.UserException
+    {
         int pos = java.util.Arrays.binarySearch(_iceOps, current.operation);
-        if (pos < 0) {
+        if(pos < 0)
+        {
             throw new com.zeroc.Ice.OperationNotExistException(current.id, current.facet, current.operation);
         }
 
-        switch (pos) {
-            case 0: {
-                return _iceD_getStatus(this, in, current);
+        switch(pos)
+        {
+            case 0:
+            {
+                return _iceD_getEatenStatus(this, in, current);
             }
-            case 1: {
+            case 1:
+            {
                 return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
             }
-            case 2: {
+            case 2:
+            {
                 return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
             }
-            case 3: {
+            case 3:
+            {
                 return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
             }
-            case 4: {
+            case 4:
+            {
                 return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
             }
         }
 
-        assert (false);
+        assert(false);
         throw new com.zeroc.Ice.OperationNotExistException(current.id, current.facet, current.operation);
     }
 }

@@ -1,32 +1,67 @@
 import sys
 import Ice
+import gen.Servants_ice as Servants
 
 sys.path.append("./gen")
 
-import Servants
+import Servants  # type: ignore
 
 
-def main():
+def client_cli(server_port=10000):
     with Ice.initialize(sys.argv) as communicator:
-        baseDedicated = communicator.stringToProxy("Dedicated1:default -p 10000")
-        # Dedicated
-        dedicated = Servants.DedicatedPrx.checkedCast(baseDedicated)
-        if not dedicated:
-            raise RuntimeError("Invalid proxy for Dedicated1")
+        print("\n[Client] Connected to server successfully.")
+        print("[Client] Use the menu below to interact with the server.\n")
 
-        reply = dedicated.sayHello()
-        print("Reply from Dedicated:", reply)
+        while True:
+            print("\n[Client] Menu:")
+            print("1) Call sayHello on Dedicated")
+            print("2) Call getStatus on Shared")
+            print("3) Exit")
 
-        # Shared
-        baseShared = communicator.stringToProxy("SharedObject:default -p 10000")
+            choice = input("Choose option: ").strip()
 
-        shared = Servants.SharedPrx.checkedCast(baseShared)
-        if not shared:
-            raise RuntimeError("Invalid proxy for SharedObject")
+            if choice == "1":
+                object_id = input(
+                    "Enter Dedicated object name (e.g., DedicatedJar1): "
+                ).strip()
+                try:
+                    base = communicator.stringToProxy(
+                        f"Dedicated/{object_id}:default -p {server_port}"
+                    )
+                    dedicated = Servants.DedicatedJarPrx.checkedCast(base)
+                    if not dedicated:
+                        print(f"[Client] Invalid proxy for Dedicated/{object_id}")
+                        continue
 
-        status = shared.getStatus()
-        print("Reply from Shared:", status)
+                    reply = dedicated.eatCookie()
+                    print(f"[Client] Reply from Dedicated/{object_id}: {reply}")
+
+                except Ice.Exception as e:
+                    print(f"[Client] Error calling Dedicated/{object_id}: {e}")
+
+            elif choice == "2":
+                try:
+                    shared_proxy = communicator.stringToProxy(
+                        f"SharedObject:default -p {server_port}"
+                    )
+                    shared = Servants.SharedReporterPrx.checkedCast(shared_proxy)
+                    if not shared:
+                        print("[Client] Invalid proxy for SharedObject")
+                        continue
+
+                    reply = shared.getEatenStatus()
+                    print(f"[Client] Reply from Shared: {reply}")
+
+                except Ice.Exception as e:
+                    print(f"[Client] Error calling Shared: {e}")
+
+            elif choice == "3":
+                print("[Client] Exiting gracefully.")
+                break
+
+            else:
+                print("[Client] Invalid option, try again.")
 
 
 if __name__ == "__main__":
-    main()
+    client_cli()

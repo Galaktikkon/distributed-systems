@@ -1,6 +1,5 @@
 import sys
 import Ice
-import gen.Servants_ice as Servants
 
 sys.path.append("./gen")
 

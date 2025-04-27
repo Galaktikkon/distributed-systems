@@ -1,0 +1,26 @@
+{
+  "cities": ["Berlin", "Tokyo", "London", "Warsaw", "New York"],
+  "distances": {
+    "MARATHON": 1,
+    "HALF_MARATHON": 2,
+    "ULTRAMARATHON": 3,
+    "TEN_K": 4,
+    "FIVE_K": 5
+  },
+  "weathers": {
+    "SUNNY": 1,
+    "CLOUDY": 2,
+    "RAINY": 3,
+    "STORMY": 4,
+    "SNOWY": 5
+  },
+  "tags": [
+    "night",
+    "mountain",
+    "charity",
+    "forest",
+    "lake",
+    "desert",
+    "savannah"
+  ]
+}

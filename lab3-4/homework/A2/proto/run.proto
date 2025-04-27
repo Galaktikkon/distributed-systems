@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+option java_package = "run";
+option java_outer_classname = "RunProto";
+
+enum WeatherCondition {
+  WEATHER_UNKNOWN = 0;
+  SUNNY = 1;
+  CLOUDY = 2;
+  RAINY = 3;
+  STORMY = 4;
+  SNOWY = 5;
+}
+
+enum DistanceType {
+  DISTANCE_UNKNOWN = 0;
+  MARATHON = 1;
+  HALF_MARATHON = 2;
+  ULTRAMARATHON = 3;
+  TEN_K = 4;
+  FIVE_K = 5;
+}
+
+message RunningEvent {
+  int32 id = 1;
+  string city = 2;
+  WeatherCondition weather = 3;
+  DistanceType distance = 4;
+  string start_time = 5;
+  repeated string tags = 6;
+}
+
+message SubscriptionRequest {
+  string client_id = 1;
+  repeated string cities = 2;
+  repeated DistanceType distances = 3;
+  repeated string tags = 4;
+}
+
+message SubscriptionResponse {
+  int32 subscription_id = 1;
+}
+
+message UnsubscribeRequest {
+  string client_id = 1;
+  int32 subscription_id = 2;
+}
+
+message UnsubscribeResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ErrorResponse {
+  string error_message = 1;
+}
+
+message StreamResponse {
+  oneof payload {
+    RunningEvent event = 1;
+    ErrorResponse error = 2;
+  }
+}
+
+service RunningService {
+  rpc Subscribe (SubscriptionRequest) returns (stream StreamResponse);
+  rpc Unsubscribe (UnsubscribeRequest) returns (UnsubscribeResponse);
+}

@@ -9,58 +9,58 @@ import Servants  # type: ignore
 
 def client_cli(server_port=10000):
     with Ice.initialize(sys.argv) as communicator:
-        print("\n[Client] Connected to server successfully.")
-        print("[Client] Use the menu below to interact with the server.\n")
+        print("\n[Client] Connected to Cookie Jar Server 🍪")
+        print("[Client] Use the menu below to interact with the jars.\n")
 
         while True:
-            print("\n[Client] Menu:")
-            print("1) Call sayHello on Dedicated")
-            print("2) Call getStatus on Shared")
+            print("\n[Client] Cookie Jar Menu:")
+            print("1) Eat a cookie from a specific jar")
+            print("2) Check how many cookies were eaten (shared report)")
             print("3) Exit")
 
             choice = input("Choose option: ").strip()
 
             if choice == "1":
-                object_id = input(
-                    "Enter Dedicated object name (e.g., DedicatedJar1): "
+                jar_name = input(
+                    "Enter the Cookie Jar name (e.g., Jar1, Jar2): "
                 ).strip()
                 try:
                     base = communicator.stringToProxy(
-                        f"Dedicated/{object_id}:default -p {server_port}"
+                        f"Dedicated/{jar_name}:default -p {server_port}"
                     )
-                    dedicated = Servants.DedicatedJarPrx.checkedCast(base)
-                    if not dedicated:
-                        print(f"[Client] Invalid proxy for Dedicated/{object_id}")
+                    jar = Servants.DedicatedJarPrx.checkedCast(base)
+                    if not jar:
+                        print(f"[Client] Invalid proxy for Dedicated/{jar_name}")
                         continue
 
-                    reply = dedicated.eatCookie()
-                    print(f"[Client] Reply from Dedicated/{object_id}: {reply}")
+                    reply = jar.eatCookie()
+                    print(f"[Client] You ate a cookie from {jar_name}! {reply}")
 
                 except Ice.Exception as e:
-                    print(f"[Client] Error calling Dedicated/{object_id}: {e}")
+                    print(f"[Client] Error calling Dedicated/{jar_name}: {e}")
 
             elif choice == "2":
                 try:
                     shared_proxy = communicator.stringToProxy(
                         f"SharedObject:default -p {server_port}"
                     )
-                    shared = Servants.SharedReporterPrx.checkedCast(shared_proxy)
-                    if not shared:
+                    reporter = Servants.SharedReporterPrx.checkedCast(shared_proxy)
+                    if not reporter:
                         print("[Client] Invalid proxy for SharedObject")
                         continue
 
-                    reply = shared.getEatenStatus()
-                    print(f"[Client] Reply from Shared: {reply}")
+                    report = reporter.getEatenStatus()
+                    print(f"[Client] Session cookie consumption report: {report}")
 
                 except Ice.Exception as e:
-                    print(f"[Client] Error calling Shared: {e}")
+                    print(f"[Client] Error calling Shared Reporter: {e}")
 
             elif choice == "3":
-                print("[Client] Exiting gracefully.")
+                print("[Client] Exiting gracefully. Bye! 🍪")
                 break
 
             else:
-                print("[Client] Invalid option, try again.")
+                print("[Client] Invalid option, please try again.")
 
 
 if __name__ == "__main__":

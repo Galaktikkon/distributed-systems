@@ -5,7 +5,7 @@ import utils.MessageLogger;
 
 import com.zeroc.Ice.Current;
 
-public class SharedImpl implements SharedReporter {
+public class SharedReporterImpl implements SharedReporter {
 
     private volatile int totalCookiesEaten = 0;
 
@@ -15,7 +15,7 @@ public class SharedImpl implements SharedReporter {
         return "Total cookies eaten: " + this.totalCookiesEaten;
     }
 
-    public void eatCookie() {
+    public synchronized void eatCookie() {
         totalCookiesEaten++;
     }
 }

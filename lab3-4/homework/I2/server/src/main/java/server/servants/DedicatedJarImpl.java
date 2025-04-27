@@ -3,6 +3,8 @@ package server.servants;
 import Servants.*;
 import com.zeroc.Ice.Current;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import utils.CookieJarHandler;
 import utils.MessageLogger;
 import utils.State;
 
@@ -14,9 +16,11 @@ public class DedicatedJarImpl implements DedicatedJar {
     private int eatenCookieCounter = 0;
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final CookieJarHandler handler;
 
-    public DedicatedJarImpl(String identity) {
+    public DedicatedJarImpl(String identity, CookieJarHandler handler) {
         this.identity = identity;
+        this.handler = handler;
         MessageLogger.logCreate(identity, "Servant created");
         loadStateFromFile();
     }
@@ -24,6 +28,7 @@ public class DedicatedJarImpl implements DedicatedJar {
     @Override
     public String eatCookie(Current current) {
         eatenCookieCounter++;
+        handler.reportCookieEaten();
         MessageLogger.log(identity, "Eaten a cookie! Cookies eaten from this jar: " + eatenCookieCounter);
         return "Eaten a cookie! Cookies eaten from " + identity + ": " + eatenCookieCounter;
     }

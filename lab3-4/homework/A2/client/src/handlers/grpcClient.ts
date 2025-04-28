@@ -2,6 +2,8 @@ import * as grpc from "@grpc/grpc-js";
 import { RunningServiceClient } from "../../gen/run_grpc_pb";
 import { logError } from "../utils/logger";
 
+// 172.24.109.133
+
 export function createGrpcClient(): RunningServiceClient | null {
   try {
     const client = new RunningServiceClient(

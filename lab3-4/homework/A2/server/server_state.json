@@ -4,6 +4,43 @@
         "kkk": {
             "subscriptions": {},
             "buffer": []
+        },
+        "maro": {
+            "subscriptions": {
+                "3": {
+                    "cities": [
+                        "Berlin"
+                    ],
+                    "distances": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4
+                    ],
+                    "tags": [
+                        "night"
+                    ]
+                },
+                "4": {
+                    "cities": [
+                        "New York",
+                        "Berlin",
+                        "Tokyo"
+                    ],
+                    "distances": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4
+                    ],
+                    "tags": [
+                        "night"
+                    ]
+                }
+            },
+            "buffer": []
         }
     }
 }

@@ -205,3 +205,6 @@ replay_pid*
 
 # node
 node_modules
+
+# proto, ice generated
+gen/

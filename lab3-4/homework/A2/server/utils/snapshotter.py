@@ -48,6 +48,7 @@ async def save_state(clients, subscription_counter):
             client_info["subscriptions"][str(sub_id)] = {
                 "cities": list(sub_data["cities"]),
                 "distances": list(sub_data["distances"]),
+                "weather_conditions": list(sub_data["weather_conditions"]),
                 "tags": list(sub_data["tags"]),
             }
         state["clients"][client_id] = client_info
@@ -75,6 +76,7 @@ def load_state(run_pb2):
             client_data.subscriptions[int(sub_id)] = {
                 "cities": set(sub_data["cities"]),
                 "distances": set(sub_data["distances"]),
+                "weather_conditions": set(sub_data["weather_conditions"]),
                 "tags": set(sub_data["tags"]),
             }
 

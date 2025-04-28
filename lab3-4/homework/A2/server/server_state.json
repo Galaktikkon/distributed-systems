@@ -1,14 +1,12 @@
 {
     "subscription_counter": 1,
     "clients": {
-        "kkk": {
-            "subscriptions": {},
-            "buffer": []
-        },
         "maro": {
             "subscriptions": {
-                "3": {
+                "1": {
                     "cities": [
+                        "London",
+                        "Warsaw",
                         "Berlin"
                     ],
                     "distances": [
@@ -18,14 +16,43 @@
                         3,
                         4
                     ],
+                    "weather_conditions": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4
+                    ],
                     "tags": [
                         "night"
                     ]
-                },
-                "4": {
+                }
+            },
+            "buffer": []
+        },
+        "kuba": {
+            "subscriptions": {
+                "2": {
                     "cities": [
-                        "New York",
-                        "Berlin",
+                        "London",
+                        "New York"
+                    ],
+                    "distances": [
+                        0,
+                        1
+                    ],
+                    "weather_conditions": [
+                        0,
+                        1
+                    ],
+                    "tags": [
+                        "charity"
+                    ]
+                },
+                "3": {
+                    "cities": [
+                        "London",
+                        "Warsaw",
                         "Tokyo"
                     ],
                     "distances": [
@@ -35,8 +62,16 @@
                         3,
                         4
                     ],
+                    "weather_conditions": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4
+                    ],
                     "tags": [
-                        "night"
+                        "night",
+                        "forest"
                     ]
                 }
             },

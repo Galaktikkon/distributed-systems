@@ -6,9 +6,13 @@ python \
     --grpc_python_out=server/gen proto/run.proto
 
 mkdir -p client/gen
-protoc \
-  --proto_path=proto \
-  --java_out=client/src/main/java \
-  --grpc-java_out=client/src/main/java \
-  proto/run.proto
+cd client
+npx grpc_tools_node_protoc \
+  --proto_path=../proto \
+  --js_out=import_style=commonjs,binary:./gen \
+  --grpc_out=grpc_js:./gen \
+  --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
+  --ts_out=grpc_js:./gen \
+  ../proto/run.proto
 
+cd ..

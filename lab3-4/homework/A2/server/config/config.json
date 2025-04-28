@@ -1,26 +1,18 @@
 {
   "cities": ["Berlin", "Tokyo", "London", "Warsaw", "New York"],
   "distances": {
+    "ULTRAMARATHON": 0,
     "MARATHON": 1,
     "HALF_MARATHON": 2,
-    "ULTRAMARATHON": 3,
-    "TEN_K": 4,
-    "FIVE_K": 5
+    "TEN_K": 3,
+    "FIVE_K": 4
   },
   "weathers": {
-    "SUNNY": 1,
-    "CLOUDY": 2,
-    "RAINY": 3,
-    "STORMY": 4,
-    "SNOWY": 5
+    "SUNNY": 0,
+    "CLOUDY": 1,
+    "RAINY": 2,
+    "STORMY": 3,
+    "SNOWY": 4
   },
-  "tags": [
-    "night",
-    "mountain",
-    "charity",
-    "forest",
-    "lake",
-    "desert",
-    "savannah"
-  ]
+  "tags": ["night", "mountain", "charity", "forest", "lake"]
 }

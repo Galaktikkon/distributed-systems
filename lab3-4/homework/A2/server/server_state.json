@@ -1,0 +1,9 @@
+{
+    "subscription_counter": 1,
+    "clients": {
+        "kkk": {
+            "subscriptions": {},
+            "buffer": []
+        }
+    }
+}

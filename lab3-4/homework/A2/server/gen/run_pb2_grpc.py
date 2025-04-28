@@ -34,20 +34,47 @@ class RunningServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.Subscribe = channel.unary_stream(
-                '/run.RunningService/Subscribe',
+        self.Register = channel.unary_unary(
+                '/RunningService/Register',
+                request_serializer=run__pb2.RegisterRequest.SerializeToString,
+                response_deserializer=run__pb2.RegisterResponse.FromString,
+                _registered_method=True)
+        self.Unregister = channel.unary_unary(
+                '/RunningService/Unregister',
+                request_serializer=run__pb2.UnregisterRequest.SerializeToString,
+                response_deserializer=run__pb2.UnregisterResponse.FromString,
+                _registered_method=True)
+        self.Subscribe = channel.unary_unary(
+                '/RunningService/Subscribe',
                 request_serializer=run__pb2.SubscriptionRequest.SerializeToString,
-                response_deserializer=run__pb2.StreamResponse.FromString,
+                response_deserializer=run__pb2.SubscriptionResponse.FromString,
                 _registered_method=True)
         self.Unsubscribe = channel.unary_unary(
-                '/run.RunningService/Unsubscribe',
+                '/RunningService/Unsubscribe',
                 request_serializer=run__pb2.UnsubscribeRequest.SerializeToString,
                 response_deserializer=run__pb2.UnsubscribeResponse.FromString,
+                _registered_method=True)
+        self.EventStream = channel.unary_stream(
+                '/RunningService/EventStream',
+                request_serializer=run__pb2.RegisterRequest.SerializeToString,
+                response_deserializer=run__pb2.StreamResponse.FromString,
                 _registered_method=True)
 
 
 class RunningServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
+
+    def Register(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Unregister(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def Subscribe(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -61,29 +88,104 @@ class RunningServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def EventStream(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_RunningServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Subscribe': grpc.unary_stream_rpc_method_handler(
+            'Register': grpc.unary_unary_rpc_method_handler(
+                    servicer.Register,
+                    request_deserializer=run__pb2.RegisterRequest.FromString,
+                    response_serializer=run__pb2.RegisterResponse.SerializeToString,
+            ),
+            'Unregister': grpc.unary_unary_rpc_method_handler(
+                    servicer.Unregister,
+                    request_deserializer=run__pb2.UnregisterRequest.FromString,
+                    response_serializer=run__pb2.UnregisterResponse.SerializeToString,
+            ),
+            'Subscribe': grpc.unary_unary_rpc_method_handler(
                     servicer.Subscribe,
                     request_deserializer=run__pb2.SubscriptionRequest.FromString,
-                    response_serializer=run__pb2.StreamResponse.SerializeToString,
+                    response_serializer=run__pb2.SubscriptionResponse.SerializeToString,
             ),
             'Unsubscribe': grpc.unary_unary_rpc_method_handler(
                     servicer.Unsubscribe,
                     request_deserializer=run__pb2.UnsubscribeRequest.FromString,
                     response_serializer=run__pb2.UnsubscribeResponse.SerializeToString,
             ),
+            'EventStream': grpc.unary_stream_rpc_method_handler(
+                    servicer.EventStream,
+                    request_deserializer=run__pb2.RegisterRequest.FromString,
+                    response_serializer=run__pb2.StreamResponse.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'run.RunningService', rpc_method_handlers)
+            'RunningService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('run.RunningService', rpc_method_handlers)
+    server.add_registered_method_handlers('RunningService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
 class RunningService(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def Register(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/RunningService/Register',
+            run__pb2.RegisterRequest.SerializeToString,
+            run__pb2.RegisterResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Unregister(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/RunningService/Unregister',
+            run__pb2.UnregisterRequest.SerializeToString,
+            run__pb2.UnregisterResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
 
     @staticmethod
     def Subscribe(request,
@@ -96,12 +198,12 @@ class RunningService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(
+        return grpc.experimental.unary_unary(
             request,
             target,
-            '/run.RunningService/Subscribe',
+            '/RunningService/Subscribe',
             run__pb2.SubscriptionRequest.SerializeToString,
-            run__pb2.StreamResponse.FromString,
+            run__pb2.SubscriptionResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -126,9 +228,36 @@ class RunningService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/run.RunningService/Unsubscribe',
+            '/RunningService/Unsubscribe',
             run__pb2.UnsubscribeRequest.SerializeToString,
             run__pb2.UnsubscribeResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def EventStream(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/RunningService/EventStream',
+            run__pb2.RegisterRequest.SerializeToString,
+            run__pb2.StreamResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -16,7 +16,7 @@ def generate_event(event_id: int, CONFIG: Any) -> run_pb2.RunningEvent:
     distance = DISTANCES[random.choice(list(DISTANCES.keys()))]
     start_time = (
         datetime.now() + timedelta(minutes=random.randint(5, 120))
-    ).isoformat() + "Z"
+    ).isoformat() + "Z"  # na normalny jakis string
     tags = random.sample(TAGS, k=random.randint(1, len(TAGS)))
 
     return run_pb2.RunningEvent(

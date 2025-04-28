@@ -8,7 +8,7 @@ import Servants  # type: ignore
 
 def client_cli(server_port=10000):
     with Ice.initialize(sys.argv) as communicator:
-        print("\n[Client] Connected to Cookie Jar Server 🍪")
+        print("\n[Client] Connected to Cookie Jar Server")
         print("[Client] Use the menu below to interact with the jars.\n")
 
         while True:
@@ -55,7 +55,7 @@ def client_cli(server_port=10000):
                     print(f"[Client] Error calling Shared Reporter: {e}")
 
             elif choice == "3":
-                print("[Client] Exiting gracefully. Bye! 🍪")
+                print("[Client] Exiting gracefully.")
                 break
 
             else:

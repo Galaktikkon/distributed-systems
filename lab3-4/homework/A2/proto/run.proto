@@ -1,8 +1,5 @@
 syntax = "proto3";
 
-option java_package = "run";
-option java_outer_classname = "RunProto";
-
 enum WeatherCondition {
   SUNNY = 0;
   CLOUDY = 1;

@@ -208,3 +208,6 @@ node_modules
 
 # proto, ice generated
 gen/
+
+# zookeeper
+apache-zookeeper/

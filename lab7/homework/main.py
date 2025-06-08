@@ -115,16 +115,21 @@ def show_tree():
         for node, data in tree.nodes(data=True)
     }
 
+    node_colors = [
+        "green" if node == NODE_TO_WATCH else "purple" for node in tree.nodes()
+    ]
+
     plt.figure(figsize=(8, 6))
     nx.draw(
         tree,
         pos,
         labels=labels,
         with_labels=True,
-        node_color="lightblue",
+        node_color=node_colors,
         edge_color="gray",
         node_size=2000,
         font_size=10,
+        font_color="white",
     )
     plt.title(f"Zookeeper Tree Structure for {NODE_TO_WATCH}")
     plt.show()

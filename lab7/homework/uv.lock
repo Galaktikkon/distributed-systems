@@ -1,0 +1,23 @@
+version = 1
+revision = 2
+requires-python = ">=3.12"
+
+[[package]]
+name = "homework"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "kazoo" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "kazoo", specifier = ">=2.10.0" }]
+
+[[package]]
+name = "kazoo"
+version = "2.10.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ff/01/75d0baf017c89de8909e4429a1865a17e45d9b787ce8084a2c55c95a79c9/kazoo-2.10.0.tar.gz", hash = "sha256:905796ae4f4c12bd4e4ae92e6e5d018439e6b56c8cfbb24825362e79b230dab1", size = 183304, upload-time = "2024-01-28T20:02:03.921Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/fc/48/6a6f6de9b6257cd1741ffb877068731a7469d13ea0e2d73c9a1daa557c59/kazoo-2.10.0-py2.py3-none-any.whl", hash = "sha256:de2d69168de432ff66b457a26c727a5bf7ff53af5806653fd1df7f04b6a5483c", size = 148873, upload-time = "2024-01-28T20:02:01.773Z" },
+]

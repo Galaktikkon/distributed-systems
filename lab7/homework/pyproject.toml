@@ -8,5 +8,6 @@ dependencies = [
     "kazoo>=2.10.0",
     "matplotlib>=3.10.3",
     "networkx>=3.5",
+    "pyqt5>=5.15.11",
 ]
 

@@ -2,7 +2,11 @@ from kazoo.client import KazooClient
 from kazoo.protocol.states import EventType
 from subprocess import Popen
 import networkx as nx
+import matplotlib
 import matplotlib.pyplot as plt
+
+matplotlib.use("Qt5Agg")
+
 
 PROMPT = "> "
 
